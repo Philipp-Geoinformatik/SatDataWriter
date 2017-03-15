@@ -102,8 +102,8 @@ public class Builder {
 	public static void main(String[] args) {
 		String mje = "txt/mje.txt";
 		String i = "txt/r_I_ECI.txt";
-		String j = "txt/r_J_ECEF.txt";
-		String k = "txt/r_K_ECEF.txt";
+		String j = "txt/r_J_ECI.txt";
+		String k = "txt/r_K_ECI.txt";
 
 		Builder b = new Builder(mje, i, j, k);
 		String json = b.arrangeJsonFromData();
