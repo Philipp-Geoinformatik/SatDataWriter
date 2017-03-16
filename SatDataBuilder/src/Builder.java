@@ -9,7 +9,6 @@ import java.util.List;
 public class Builder {
 
 	ArrayList<Double> mje, I, J, K;
-	String json;
 
 	/**
 	 * 
@@ -25,6 +24,9 @@ public class Builder {
 		this.K = convertValues(getLinesOfTxt(k));
 	}
 
+	public Builder() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * 
 	 * @param path
