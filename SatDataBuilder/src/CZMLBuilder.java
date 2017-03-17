@@ -37,7 +37,7 @@ public class CZMLBuilder extends Builder {
 	public String buildHeader() {
 		String header = "{\"id\" : \"document\","
 				+ "\"version\" : \"1.0\","
-				+ "\"clock\" : {\"interval\" : \"2014-04-06T21:44:00Z/2014-04-11T21:42:00Z\","
+				+ "\"clock\" : {\"interval\" : \"2014-04-06T21:44:03Z/2014-04-11T21:42:00Z\","
 				+ "\"currentTime\" : \"2014-04-06T21:44:00Z\","
 				+ "\"multiplier\" : 1," + "\"range\" : \"LOOP_STOP\","
 				+ "\"step\" : \"SYSTEM_CLOCK_MULTIPLIER\"}}";
@@ -75,13 +75,17 @@ public class CZMLBuilder extends Builder {
 
 		// building the vehicle
 		String vehicle = "{\"id\" : \"Vehicle\","
-				+ "\"availability\" : \"2014-04-06T21:44:00Z/2014-04-11T21:42:00Z\","
+				+ "\"availability\" : \"2014-04-06T21:44:03Z/2014-04-11T21:42:00Z\","
 				// billboard
-				+ "\"billboard\" : {\"eyeOffset\" : {\"cartesian\" : [0.0, 0.0, 0.0]},\"horizontalOrigin\" : \"CENTER\",\"image\" : \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEISURBVEhLvVXBDYQwDOuojHKj8LhBbpTbpBCEkZsmIVTXq1RVQGrHiWlLmTTqPiZBlyLgy/KSZQ5JSHDQ/mCYCsC8106kDU0AdwRnvYZArWRcAl0dcYJq1hWCb3hBrumbDAVMwAC82WoRvgMnVMDBnB0nYZFTbE6BBvdUGqVqCbjBIk3PyFFR/NU7EKzru+qZsau3ryPwwCRLKYOzutZuCL6fUmWeJGzNzL/RxAMrUmASSCkkAayk2IxPlwhAAYGpsiHQjbLccfdOY5gKkCXAMi7SscAwbQpAnKyctWyUZ6z8ja3OGMepwD8asz+9FnSvbhU8uVOHFIwQsI3/p0CfhuqCSQuxLqsN6mu8SS+N42MAAAAASUVORK5CYII=\","
+				//+"\"billboard\" : {\"eyeOffset\" : {\"cartesian\" : [0.0, 0.0, 0.0]},\"horizontalOrigin\" : \"CENTER\",\"image\" : \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEISURBVEhLvVXBDYQwDOuojHKj8LhBbpTbpBCEkZsmIVTXq1RVQGrHiWlLmTTqPiZBlyLgy/KSZQ5JSHDQ/mCYCsC8106kDU0AdwRnvYZArWRcAl0dcYJq1hWCb3hBrumbDAVMwAC82WoRvgMnVMDBnB0nYZFTbE6BBvdUGqVqCbjBIk3PyFFR/NU7EKzru+qZsau3ryPwwCRLKYOzutZuCL6fUmWeJGzNzL/RxAMrUmASSCkkAayk2IxPlwhAAYGpsiHQjbLccfdOY5gKkCXAMi7SscAwbQpAnKyctWyUZ6z8ja3OGMepwD8asz+9FnSvbhU8uVOHFIwQsI3/p0CfhuqCSQuxLqsN6mu8SS+N42MAAAAASUVORK5CYII=\","
 				// pixel offset
-				+ "\"pixelOffset\" : {\"cartesian2\" : [0.0, 0.0]},\"scale\" : 0.8,\"show\" : true,\"verticalOrigin\" : \"BOTTOM\"},"
+				//+ "\"pixelOffset\" : {\"cartesian2\" : [0.0, 0.0]},\"scale\" : 0.8,\"show\" : true,\"verticalOrigin\" : \"BOTTOM\"},"
 				// path
-				+ "\"path\" : {\"material\" : {\"solidColor\" : {\"color\" : {\"rgba\" : [255, 255, 0, 255]}}},\"width\" : 5.0,\"show\" : true},"
+				//+ "\"path\" : {\"material\" : {\"solidColor\" : {\"color\" : {\"rgba\" : [255, 255, 0, 255]}}},\"width\" : 1.0,\"show\" : true},"
+				
+				+ "\"point\" : {\"color\" : {\"rgba\" : [255, 255, 255, 128]},\"outlineColor\" : {\"rgba\" : [20, 20, 255, 128]},\"outlineWidth\" : 3,"
+				+ "\"pixelSize\" : 8},"
+				
 				+ sampPosPro + "}";
 		return vehicle;
 	}
@@ -101,7 +105,7 @@ public class CZMLBuilder extends Builder {
 		String end = "]";
 
 		result = begin + buildHeader() + "," + buildVehicle() + ", "
-				+ buildEllipsoid() + end;
+				+ buildEllipsoid() +","+buildGroundStation()+ "," + buildLineOfSight()+ end;
 		System.out.println(result);
 		// writing file to project directory "results" as czml
 		try {
@@ -141,6 +145,27 @@ public class CZMLBuilder extends Builder {
 	void getCartesians() {
 
 	}
+	
+	public String buildGroundStation(){
+		// 5390.281167     -1597.890835      3007.077772
+		String point = "{"
+				+ "\"id\" : \"Ground-Station\","
+				+ "\"name\": \"Teide Observatory - Observatorio del Teide\","
+				+ "\"position\" : {\"cartesian\" : [5390281.167, -1597890.835, 3007077.772]},"
+				+ "\"point\": {\"color\": {\"rgba\": [255, 255, 255, 150]},\"outlineColor\": {\"rgba\": [255, 255, 20, 150]},\"outlineWidth\" : 2,\"pixelSize\": 10}}";
+			
+		return point;
+	}
+	
+	public String buildLineOfSight(){
+		
+		String los = "{\"id\":\"lineofsigth\","
+				+ "\"name\":\"lineofsight\",\"polyline\":{\"positions\":{\"references\":[\"Ground-Station#position\",\"Vehicle#position\"]},\"material\":{\"polylineArrow\":{\"color\":{\"rgba\":[255,255,255,150]}}},\"followSurface\":false,\"width\":6}}";
+		
+		
+		return los;
+	}
+	
 
 	/**
 	 * 
@@ -155,25 +180,29 @@ public class CZMLBuilder extends Builder {
 		listN = getLinesOfTxt("txt/r_N_RTN.txt");
 		for (int i = 0; i < listN.size(); i++) {
 			dim += "" + sec.get(i) + ",";
-			dim += "" + convertValues(listR).get(i) * 1000 + ",";
-			dim += "" + convertValues(listT).get(i) * 1000 + ",";
-			dim += "" + convertValues(listN).get(i) * 1000 + "";
+			dim += "" + convertValues(listT).get(i) * 1000 + ",";//x in cesium ellipsoid
+			dim += "" + convertValues(listN).get(i) * 1000 + ","; //y in cesium ellipsoid
+			dim += "" + convertValues(listR).get(i) * 1000 + "";//z in cesium ellipsoid
 			if (i < listN.size() - 1)
 				dim += ",";
 		}
 
 		String res = "{"
-				+ "\"id\" : \"blueEllipsoid\","
-				+ "\"availability\" :\"2014-04-06T21:44:00Z/2014-04-11T21:42:00Z\","
-				+ "\"name\" : \"blue ellipsoid\","
+				+ "\"id\" : \"Ellipsoid\","
+				+ "\"availability\" :\"2014-04-06T21:44:03Z/2014-04-11T21:42:00Z\","
+				+ "\"name\" : \"GEOSTAT\","
 				+ "\"position\" : {\"reference\" : \"Vehicle#position\"},"
 				// Ellipsoid specs
 				+ "\"ellipsoid\" :"
-				+ " {\"radii\" : {\"epoch\" : \"2014-04-06T21:44:00Z\",\"cartesian\" : ["
+				+ " {\"radii\" : {\"epoch\" : \"2014-04-06T21:44:03Z\",\"cartesian\" : ["
 				+ dim + "]},"
 				// style
 				+ "\"fill\" : true,"
-				+ "\"material\" : {\"solidColor\" : {\"color\" : {\"rgba\" : [0, 0, 255, 255]}}}";
+				+"\"material\" : {\"solidColor\" : {\"color\" : {\"rgba\" : [230, 0, 0, 50]}}},"
+				+ "\"outline\" : true,"
+				+ "\"outlineColor\" : {\"rgba\" : [200, 200, 200, 180]},"
+				+ "\"slicePartitions\" : 24,"
+				+ "\"stackPartitions\" : 24";
 		res += "}}";
 		System.out.println(res);
 		return res;
